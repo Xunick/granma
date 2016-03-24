@@ -21,16 +21,31 @@ public class AutoMultiBattle extends ThreadBase {
 		WebElement currentBp = driver.findElement(By.className("prt-user-bp-value"));
 		int bp = Integer.parseInt(currentBp.getAttribute("title"));
 		if (bp < 5) {
-			Thread.sleep(1000 * 60 * 10); // sleep 10 mins
-			return;
+			
+			String currentAp = driver.findElement(By.className("txt-stamina-value")).getAttribute("title");
+			int ap = Integer.parseInt(currentAp.split("/")[0]);
+			if(ap>25){
+				driver.navigate().to(config.URL_GAME + "#event/teamraid019/supporter/708931/1");
+			}
+			else{
+				Thread.sleep(1000 * 60 * 10); // sleep 10 mins
+				return;
+			}
 		}
-
-		driver.findElement(By.className("btn-multi-raid")).click();
-
-		List<WebElement> supports = driver.findElements(By.className("btn-supporter"));
-		for (int i = 0; i < supports.size(); i++) {
-			if (supports.get(i).isDisplayed()) {
-				supports.get(i + 1).click();
+		else{
+			List<WebElement> raids = driver.findElement(By.id("prt-assist-event")).findElements(By.className("btn-multi-raid"));
+			for (int i = 0; i < raids.size(); i++) {
+				if (raids.get(i).isDisplayed()) {
+					raids.get(i).click();
+					break;
+				}
+			}
+		}
+		
+		List<WebElement> buttons = driver.findElements(By.className("btn-supporter"));
+		for (int i = 0; i < buttons.size(); i++) {
+			if (buttons.get(i).isDisplayed()) {
+				buttons.get(i+1).click();
 				break;
 			}
 		}

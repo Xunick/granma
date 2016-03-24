@@ -79,10 +79,11 @@ public abstract class ThreadBase extends Thread {
 	public void DoBattle() {
 		while (true) {
 			try {
-				if (driver.findElements(By.className("prt-result-cnt")).size() > 0) {
+				String url = driver.getCurrentUrl();
+				if(!url.contains("#raid_multi")){
 					return;
 				}
-
+				
 				Boolean bSent = ClickButtonByClassName("btn-usual-text");
 				if(bSent){
 					Thread.sleep(2000);
