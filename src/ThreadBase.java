@@ -77,6 +77,7 @@ public abstract class ThreadBase extends Thread {
 	}
 	
 	public void DoBattle() {
+		int nFailCount = 0;
 		while (true) {
 			try {
 				String url = driver.getCurrentUrl();
@@ -87,8 +88,10 @@ public abstract class ThreadBase extends Thread {
 				Boolean bSent = ClickButtonByClassName("btn-usual-text");
 				if(bSent){
 					Thread.sleep(2000);
-					ClickButtonByClassName("btn-usual-ok");
-					Thread.sleep(1000);
+				}
+				
+				if(ClickButtonByClassName("btn-usual-ok")){
+					Thread.sleep(2000);
 				}
 
 				//Proceed to next stage or finish
@@ -106,7 +109,7 @@ public abstract class ThreadBase extends Thread {
 					if (driver.findElements(By.cssSelector(".btn-usual-ok.btn-summon-use")).size() > 0) {
 						js.executeScript("$('.btn-usual-ok.btn-summon-use').trigger('tap');");
 					}
-					Thread.sleep(3000);
+					Thread.sleep(5000);
 					continue;
 				}
 
@@ -148,7 +151,11 @@ public abstract class ThreadBase extends Thread {
 
 				Thread.sleep(3000);
 			} catch (Exception e) {
+				nFailCount++;
 				System.out.println(e.getMessage());
+				if(nFailCount>100){
+					return;
+				}
 			}
 		}
 	}

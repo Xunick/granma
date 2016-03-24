@@ -28,7 +28,7 @@ public class AutoMultiBattle extends ThreadBase {
 				driver.navigate().to(config.URL_GAME + "#event/teamraid019/supporter/708931/1");
 			}
 			else{
-				Thread.sleep(1000 * 60 * 10); // sleep 10 mins
+				Thread.sleep(1000 * 60); // sleep 1 mins
 				return;
 			}
 		}
